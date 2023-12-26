@@ -1,20 +1,17 @@
 package com.recordrock.login;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.catalina.filters.ExpiresFilter;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -53,9 +50,9 @@ public class LoginController {
         RestTemplate restTemplate = new RestTemplate();
 
         String url = "https://nid.naver.com/oauth2.0/token";
-        String grantType = "grant_type=authorization_code";
-        String clientId = "client_id=_fFGK1D4khKcBZzjprq1";
-        String clientSecret = "client_secret=client_secret_asdf";
+        String grantType = "authorization_code";
+        String clientId = "_fFGK1D4khKcBZzjprq1";
+        String clientSecret = "g2FjHTQ6uK";
 
         HttpHeaders httpHeaders = new HttpHeaders();
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
@@ -76,23 +73,37 @@ public class LoginController {
                 String.class
         );
 
+        System.out.println("oauthTokenResponse = " + oauthTokenResponse);
+
         ObjectMapper token_om = new ObjectMapper();
         NaverTokenVo naverToken = null;
 
-//        try {
-//            naverToken = token_om.readValue(oauthTokenResponse.getBody(), NaverTokenVo.class);
-//        } catch (JsonMappingException je){
-//            je.printStackTrace();
-//        }
+        System.out.println("oauthTokenResponse.getBody() = " + oauthTokenResponse.getBody());
+        
+        try {
+            naverToken = token_om.readValue(oauthTokenResponse.getBody(), NaverTokenVo.class);
+        } catch(JsonProcessingException je){
+            je.printStackTrace();
+        }
 
-        System.out.println("oauthTokenResponse = " + oauthTokenResponse);
+        System.out.println("naverToken = " + naverToken);
 
-//        String url = "https://nid.naver.com/oauth2.0/token" +
-//                "?" + grantType +
-//                "&" + clientId +
-//                "&"+ clientSecret +
-//                "&code=" + request.getParameter("code") +
-//                "&state=" + request.getParameter("state");
+        // 토큰을 이용해 정보를 받아올 API 요청을 보낼 로직
+        RestTemplate restTemplateProfile = new RestTemplate();
+        HttpHeaders userDetailReqHeaders = new HttpHeaders();
+
+        userDetailReqHeaders.add("Authorization", "Bearer " + naverToken.getAccess_token());
+        userDetailReqHeaders.add("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");;
+        HttpEntity<MultiValueMap<String, String>> naverProfileRequest = new HttpEntity<>(userDetailReqHeaders);
+
+        ResponseEntity<String> userDetailResponse = restTemplateProfile.exchange(
+                "https://openapi.naver.com/v1/nid/me",
+                HttpMethod.POST,
+                naverProfileRequest,
+                String.class
+        );
+
+        System.out.println("userDetailResponse = " + userDetailResponse);
 
     }
 }
