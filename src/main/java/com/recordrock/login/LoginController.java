@@ -2,6 +2,7 @@ package com.recordrock.login;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpEntity;
@@ -23,6 +24,8 @@ import java.security.SecureRandom;
 @RequestMapping("/login")
 public class LoginController {
 
+    LoginService ls = new LoginService();
+
     @GetMapping("/naverLogin")
     public void loginNaver(HttpServletResponse httpServletResponse) throws IOException {
         SecureRandom sr = new SecureRandom();
@@ -30,7 +33,6 @@ public class LoginController {
 
         httpServletResponse.sendRedirect("https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=_fFGK1D4khKcBZzjprq1&state="+stateCode+"&redirect_uri=http://localhost:8080/login/naver_callback");
     }
-
 
     /************************************
     // 1. Naver 인증 토큰을 발급 받는 로직
@@ -105,5 +107,6 @@ public class LoginController {
 
         System.out.println("userDetailResponse = " + userDetailResponse);
 
+        //Cookie cookie = new Cookie("access_token", )
     }
 }
