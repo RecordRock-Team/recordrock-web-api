@@ -1,23 +1,21 @@
 package com.recordrock.calendar;
 
-import com.recordrock.mapper.CalendarMapper;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+
 @Service
+@Transactional
 public class CalendarService {
 
+    @Autowired
     CalendarMapper calendarMapper;
 
-    public CalendarService(CalendarMapper calendarMapper) {
-        this.calendarMapper = calendarMapper;
-    }
-
-    // 암장 기록 조회
-    @GetMapping("/calendar/getCenterRecord")
-    public void getCenterRecord(int clear_no){
-
+    public List<CalenderInfoVO> selectCalendarInfo() throws Exception{
+        return calendarMapper.selectCalendarInfo();
     }
 
 }
