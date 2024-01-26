@@ -3,9 +3,16 @@
 
 <mapper namespace="com.recordrock.calendar.CalendarMapper">
 
-    <select id="selectCalendarInfo" parameterType="" resultType="">
+    <select id="selectCalendarInfoDetail" parameterType="" resultType="">
         SELECT *
-        FROM TEST
+        FROM TODAY_CLEAR a
+        JOIN WORKOUT_NOTE b on a.clear_no = b.clear_no
+        WHERE a.clear_no = #{clear_no}
+    </select>
+
+    <select id="selectCalendarInfoList" parameterType="" resultType="">
+        SELECT *
+        FROM TODAY_CLEAR
     </select>
 
 </mapper>
