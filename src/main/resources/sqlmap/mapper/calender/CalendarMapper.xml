@@ -2,15 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.recordrock.calendar.CalendarMapper">
-
-    <select id="selectCalendarInfoDetail" parameterType="" resultType="">
+    <select id="selectCalendarInfoDetail">
+--         SELECT *
+--         FROM TODAY_CLEAR a
+--         JOIN WORKOUT_NOTE b on a.clear_no = b.clear_no
         SELECT *
-        FROM TODAY_CLEAR a
-        JOIN WORKOUT_NOTE b on a.clear_no = b.clear_no
-        WHERE a.clear_no = #{clear_no}
+        FROM TODAY_CLEAR
     </select>
 
-    <select id="selectCalendarInfoList" parameterType="" resultType="">
+    <select id="selectCalendarInfoList">
         SELECT *
         FROM TODAY_CLEAR
     </select>

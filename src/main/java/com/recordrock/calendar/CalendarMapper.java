@@ -1,10 +1,10 @@
 package com.recordrock.calendar;
 
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface CalendarMapper {
 
     List<CalendarInfoVO> selectCalendarInfo() throws Exception;

@@ -5,7 +5,9 @@ import lombok.Data;
 @Data
 public class CalendarInfoDetailVO {
     int clearNo;
-    String centerFullName;
+    String center;
+    String centerHeadquarter;
+    String centerBranch;
     String clearRecord;
     String dailyMemo;
     String logoImgUrl;
