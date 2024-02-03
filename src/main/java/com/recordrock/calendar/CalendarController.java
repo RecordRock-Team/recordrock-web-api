@@ -3,6 +3,7 @@ package com.recordrock.calendar;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -12,13 +13,15 @@ public class CalendarController {
 
     private final CalendarService calendarService;
 
-    @RequestMapping("/calendar/getCenterRecord")
-    public CalendarInfoDetailVO getCalendarInfoDetail() throws Exception {
-        CalendarInfoDetailVO calendarInfoDetailVO = calendarService.selectCalendarInfoDetail();
-        return calendarInfoDetailVO;
+    @RequestMapping("calendar/getCenterRecord")
+    @ResponseBody
+    public List<CalendarInfoDetailVO> getCalendarInfoDetail() throws Exception {
+        return calendarService.selectCalendarInfoDetail();
     }
 
-    @RequestMapping("/calendar/getCalendarList")
+    // 달력 조회
+    @RequestMapping("calendar/getCalendarList")
+    @ResponseBody
     public List<CalendarInfoVO> getCalendarList() throws Exception {
         return calendarService.selectCalendarInfoList();
     }

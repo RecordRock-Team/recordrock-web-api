@@ -4,14 +4,16 @@ import lombok.Data;
 
 @Data
 public class CalendarInfoDetailVO {
-    int clearNo;
-    String center;
-    String centerHeadquarter;
-    String centerBranch;
-    String clearRecord;
-    String dailyMemo;
-    String logoImgUrl;
+    int clear_no;
+    int clear_detail_no;
+    int mem_no;
+    int center_no;
+    int grade;
+    int count;
+    int year;
+    int month;
     int day;
-    int workoutTimeHour;
-    int workoutTimeMinute;
+    String contents;
+    String center_headquarter;
+    String center_branch;
 }

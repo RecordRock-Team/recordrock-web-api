@@ -13,15 +13,14 @@ public class CalendarService {
     @Autowired
     private CalendarMapper calendarMapper;
 
+    // 달력 리스트 조회
+    public List<CalendarInfoVO> selectCalendarInfoList() throws Exception {
+        return calendarMapper.selectCalendarInfoList();
+    }
+
     // 상세 조회
-    public CalendarInfoDetailVO selectCalendarInfoDetail() throws Exception{
-        CalendarInfoDetailVO vo = new CalendarInfoDetailVO();
-        vo.setClearNo(1);
+    public List<CalendarInfoDetailVO> selectCalendarInfoDetail() throws Exception{
         return calendarMapper.selectCalendarInfoDetail();
     }
 
-    // 달력 리스트 조회
-    public List<CalendarInfoVO> selectCalendarInfoList() throws Exception {
-        return calendarMapper.selectCalendarInfo();
-    }
 }

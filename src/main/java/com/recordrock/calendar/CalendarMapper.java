@@ -7,8 +7,8 @@ import java.util.List;
 @Mapper
 public interface CalendarMapper {
 
-    List<CalendarInfoVO> selectCalendarInfo() throws Exception;
+    List<CalendarInfoVO> selectCalendarInfoList() throws Exception;
 
-    CalendarInfoDetailVO selectCalendarInfoDetail() throws Exception;
+    List<CalendarInfoDetailVO> selectCalendarInfoDetail() throws Exception;
 
 }

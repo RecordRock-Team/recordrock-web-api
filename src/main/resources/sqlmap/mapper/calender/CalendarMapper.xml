@@ -2,17 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.recordrock.calendar.CalendarMapper">
-    <select id="selectCalendarInfoDetail">
---         SELECT *
---         FROM TODAY_CLEAR a
---         JOIN WORKOUT_NOTE b on a.clear_no = b.clear_no
-        SELECT *
-        FROM TODAY_CLEAR
+    <select id="selectCalendarInfoList">
+        SELECT
+            a.clear_no,
+            a.clear_detail_no,
+            a.mem_no,
+            a.center_no,
+            a.grade,
+            a.count,
+            a.year,
+            a.month,
+            a.day,
+            'testUrl' as logo_url
+        FROM today_clear a
+                 LEFT JOIN center b on a.center_no = b.center_no
+                 LEFT JOIN center_logo c on b.center_headquarter = c.center_headquarter
+        WHERE a.mem_no = 1
+          and a.year = 2023
+          and a.month = 1
+        order by day
     </select>
 
-    <select id="selectCalendarInfoList">
-        SELECT *
-        FROM TODAY_CLEAR
+    <select id="selectCalendarInfoDetail">
+        SELECT
+            a.clear_no,
+            a.clear_detail_no,
+            a.mem_no,
+            a.center_no,
+            a.grade,
+            a.count,
+            a.year,
+            a.month,
+            a.day,
+            b.contents,
+            c.center_headquarter,
+            c.center_branch
+        FROM today_clear a
+        LEFT JOIN memo b on a.clear_no = b.clear_no
+        LEFT JOIN center c on a.center_no = c.center_no
+        WHERE a.clear_no = 1
     </select>
+
 
 </mapper>
